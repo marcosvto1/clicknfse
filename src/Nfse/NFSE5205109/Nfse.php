@@ -303,8 +303,7 @@ class Nfse
        $xml .= "<OptanteSimplesNacional>".$this->servico->OptanteSimplesNacional ."</OptanteSimplesNacional>"; 
        $xml .= "<IncentivoFiscal>". $this->servico->IncentivoFiscal. "</IncentivoFiscal>";
        $xml .= "</InfDeclaracaoPrestacaoServico>";
-      // $this->xml .= $this->montaDadosIntermediario();
-      // $this->xml .= $this->montaDadosConstrucaoCivil();
+
        return $xml;
     }
 
@@ -336,8 +335,7 @@ class Nfse
         $xml .= "<Servico>";
         $xml .= $this->montaValores();
         $xml .= "<IssRetido>".$this->servico->IssRetido."</IssRetido>";
-        if ($this->servico->IssRetido == 1)
-        {
+        if ($this->servico->IssRetido == 1) {
             $xml .= "<ResponsavelRetencao>".intval(1)."</ResponsavelRetencao>";
         }
         $xml .= "<ItemListaServico>".$this->servico->ItemListaServico."</ItemListaServico>";
@@ -345,6 +343,7 @@ class Nfse
         $xml .= "<CodigoMunicipio>".$this->servico->CodigoMunicipio."</CodigoMunicipio>";
         $xml .= "<ExigibilidadeISS>".$this->servico->ExigibilidadeISS."</ExigibilidadeISS>";
         $xml .= "</Servico>";
+
         return $xml;
     }
 
@@ -433,6 +432,7 @@ class Nfse
                 $xml .= "<Email>".$this->tomador->Email."</Email>";                
             $xml .= "</Contato>"; 
         $xml .= "</Tomador>";
+        
         return $xml;
     }
 
