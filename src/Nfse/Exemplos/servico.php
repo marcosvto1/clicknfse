@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 require '../../../vendor/autoload.php';
 
-use Click\ClickNfse\NFSE5205109\EnviarLoteRps;
+use Click\ClickNfse\NFSE5205109\Nfse;
 use Click\ClickNfse\NFSE5205109\NfseRequest;
 use stdClass;
 
@@ -13,37 +13,34 @@ $tools = [
     'senha_certificado' => ''
 ];
 
-$nfse = new EnviarLoteRps($tools);
+$nfse = new Nfse($tools);
 
 
 
 $lote = new stdClass;
-$lote->NumeroLote = 1000;
-$lote->QuantidadeRps = 1;
-$nfse->setLote($lote);
+$lote->Id = 0;
+$lote->NumeroLote = 0;
 
 $servico = new stdClass;
 $servico->Numero = 199;
-$servico->Serie = 1;
+$servico->Serie = "E";
 $servico->Tipo = 1;
 $servico->Status = 1;
 $servico->Competencia = date('Y-m-d');
 $servico->DataEmissao = date('Y-m-d');
 $servico->RegimeEspecialTributacao = 1;
 $servico->OptanteSimplesNacional = 1;
-$servico->IncentivoFiscal = 1;
-$servico->IssRetido = 2;
+$servico->IncentivoFiscal = "";
+$servico->IssRetido = 0;
 $servico->ItemListaServico = 09.01;
-$servico->Descriminacao = "Teste de dede de";
-$servico->CodigoMunicipio = "5205109";
-$servico->ExigibilidadeISS = 1;
-$servicos[] = $servico;
-
-$nfse->setServicos($servicos);
+$servico->Descriminacao = "Teste";
+$servico->CodigoMunicipio = "";
+$servico->ExigibilidadeISS = 0;
+$nfse->setServico($servico);
 
 
 $valores = new stdClass;
-$valores->ValorServicos = 100.01;
+$valores->ValorServicos = 10;
 $valores->ValorDeducoes = 0;
 $valores->ValorPis = "";
 $valores->ValorCofins = 0;
@@ -52,14 +49,13 @@ $valores->ValorIr = 0;
 $valores->ValorCsll = 0;
 $valores->OutrasRetencoes = 0;
 $valores->ValorIss = 0;
-$valores->Aliquota = 4.00;
+$valores->Aliquota = 4;
 $valores->BaseCalculo = 0.00;
 $valores->DescontoIncondicionado = 0.00;
 $valores->DescontoCondicionado = 0.00;
 $valores->ValorLiquidoNfse = 0.00;
 $valores->ValorIssRetido = 0.00;
-$valores_array[] = $valores;
-$nfse->setValores($valores_array);
+$nfse->setValores($valores);
 
 
 $prestador = new stdClass;
@@ -83,14 +79,10 @@ $tomador->Uf = "GO";
 $tomador->Cep = "75712225";
 $tomador->Telefone = "";
 $tomador->Email = "";
-$tomadores[] = $tomador;
-$nfse->setTomador($tomadores);
+$nfse->setTomador($tomador);
 
-$nfse->makeLoteRps();
-//header("Content-type: text/xml");
-//echo $nfse->getXml();
-file_put_contents('nota.xml', $nfse->getXml());
+$nfse->makeGerarNfse();
+header("Content-type: text/xml");
+echo $nfse->getXml();
 $tools = new NfseRequest($nfse->getXml());
-$tools->EnviarLoteRpsEnvio();
-
-//2019104072
+$tools->GerarNfseEnvio();

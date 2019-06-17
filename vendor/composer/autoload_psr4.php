@@ -7,5 +7,9 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'RobRichards\\XMLSecLibs\\' => array($vendorDir . '/robrichards/xmlseclibs/src'),
+    'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'NFePHP\\Common\\' => array($vendorDir . '/nfephp-org/sped-common/src'),
+    'League\\Flysystem\\' => array($vendorDir . '/league/flysystem/src'),
+    'Greenter\\XMLSecLibs\\' => array($vendorDir . '/greenter/xmldsig/src'),
     'Click\\ClickNfse\\' => array($baseDir . '/src/Nfse'),
 );
