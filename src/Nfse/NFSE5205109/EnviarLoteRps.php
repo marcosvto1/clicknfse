@@ -73,7 +73,7 @@ class EnviarLoteRps
      */
     public function makeLoteRps()
     {
-        $id = $this->lote->NumeroLote;
+        $id = 'lote:'.$this->lote->NumeroLote;
         $this->xml = "";
         $this->xml .= "<EnviarLoteRpsEnvio xmlns='http://www.abrasf.org.br/nfse.xsd'>";
         $this->xml .= "<LoteRps Id='$id' versao='2.01'>";
@@ -350,27 +350,127 @@ class EnviarLoteRps
     }
 
     public function setValores($valores)
-    {
+    {   
+        foreach($valores as $valor)
+        {
+            $params_required = [
+                'ValorServicos',
+                'Aliquota'
+            ];
+
+            $this->checkParamenters($valor, $params_required);
+        }
         $this->valores = $valores;
     }
 
-    public function setServicos($servico)
+    public function setServicos($servicos)
     {
-        $this->servicos = $servico;
+        foreach($servicos as $servico) 
+        {
+            $params_required = [                
+                'Numero',
+                'Serie',
+                'Tipo',
+                'Status',
+                'Competencia',
+                'DataEmissao',
+                'RegimeEspecialTributacao',
+                'OptanteSimplesNacional',
+                'IncentivoFiscal',
+                'IssRetido',
+                'ItemListaServico',
+                'Descriminacao',
+                'CodigoMunicipio',
+                'ExigibilidadeISS'
+            ];
+
+            $this->checkParamenters($servico, $params_required);
+        }
+
+        $this->servicos = $servicos;
     }
 
-    public function setTomador($tomador)
+    public function setTomador($tomadores)
     {
-        $this->tomador = $tomador;
+        foreach($tomadores as $tomador) {
+
+            if (key_exists('Cpf', $tomador) && empty($tomador->Cpf))
+            {
+                $params_required = [
+                    'Cnpj',
+                    'InscricaoMunicipal',
+                    'RazaoSocial',
+                    'Endereco',
+                    'Bairro',
+                    'Numero',
+                    'CodigoMunicipio',
+                    'Uf',
+                    'Cep'
+                ];
+            } else {
+
+                $params_required = [
+                    'Cpf',
+                    'RazaoSocial',
+                    'Endereco',
+                    'Bairro',
+                    'Numero',
+                    'CodigoMunicipio',
+                    'Uf',
+                    'Cep'
+                ];
+            }
+              
+            $this->checkParamenters($tomador, $params_required);
+
+        }
+
+        $this->tomador = $tomadores;
+
     }
 
     public function setPrestador($prestador)
-    {
+    {   
+
+        if (key_exists('Cpf', $prestador) && empty($prestador->Cpf))
+        {
+            $params_required = [
+                'Cnpj',
+                'InscricaoMunicipal',
+            ];
+        } else {
+            $params_required = [
+                'Cpf',
+                'InscricaoMunicipal',
+            ]; 
+        }
+
+        $this->checkParamenters($prestador, $params_required);
         $this->prestador = $prestador;
     }
 
     public function setLote($lote){
+
+        $params_required = [
+            'NumeroLote',
+            'QuantidadeRps',
+        ];
+
+        $this->checkParamenters($lote, $params_required);
         $this->lote = $lote;
+    }
+
+    private function checkParamenters($obj,$params_required)
+    {
+        foreach($params_required as $var)
+        {
+            if (!key_exists($var, $obj)){
+                throw new InvalidArgumentException('Parâmentro não encontrado:'.$var);
+            } else if (empty($obj->$var)) {
+                throw new InvalidArgumentException('Parâmentro : '. $var);
+            }       
+        }
+        
     }
 
 }
