@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 require '../../../vendor/autoload.php';
 
-use Click\ClickNfse\NFSE5205109\Nfse;
+use Click\ClickNfse\NFSE5205109\GerarNfse;
 use Click\ClickNfse\NFSE5205109\NfseRequest;
 use stdClass;
 
@@ -13,7 +13,7 @@ $tools = [
     'senha_certificado' => ''
 ];
 
-$nfse = new Nfse($tools);
+$nfse = new GerarNfse($tools);
 
 
 
@@ -22,12 +22,12 @@ $lote->Id = 0;
 $lote->NumeroLote = 0;
 
 $servico = new stdClass;
-$servico->Numero = 199;
-$servico->Serie = "E";
+$servico->Numero = 200;
+$servico->Serie = 1;
 $servico->Tipo = 1;
 $servico->Status = 1;
 $servico->Competencia = date('Y-m-d');
-$servico->DataEmissao = date('Y-m-d');
+$servico->DataEmissao = "2019-06-17T05:49:46";
 $servico->RegimeEspecialTributacao = 1;
 $servico->OptanteSimplesNacional = 1;
 $servico->IncentivoFiscal = "";
@@ -82,7 +82,7 @@ $tomador->Email = "";
 $nfse->setTomador($tomador);
 
 $nfse->makeGerarNfse();
-header("Content-type: text/xml");
-echo $nfse->getXml();
+//header("Content-type: text/xml");
+//echo $nfse->getXml();
 $tools = new NfseRequest($nfse->getXml());
-$tools->GerarNfseEnvio();
+var_dump($tools->GerarNfseEnvio());

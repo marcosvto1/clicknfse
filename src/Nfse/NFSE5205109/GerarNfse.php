@@ -4,7 +4,7 @@ namespace Click\ClickNfse\NFSE5205109;
 use RobRichards\XMLSecLibs\XMLSecurityDSig;
 use RobRichards\XMLSecLibs\XMLSecurityKey;
 use InvalidArgumentException;
-class Nfse
+class GerarNfse
 {
     private $xmlns = 'http://www.abrasf.org.br/nfse.xsd';
 
@@ -110,7 +110,9 @@ class Nfse
     {
         $this->xml = "";
         $this->xml .= "<GerarNfseEnvio>";
+        $this->xml .= "<Rps>";
         $this->xml .= $this->montarInfDeclaracaoPrestacaoServico();
+        $this->xml .= "</Rps>";
         $this->xml .= "</GerarNfseEnvio>";     
         $this->assinarXML($this->xml);           
     }
@@ -162,9 +164,10 @@ class Nfse
      */
     private function montaInfRps()
     {
+        $id = 'R'.$this->servico->Numero;
         $xml = "";
         $xml .= "<Rps>";
-        $xml .= "<IdenticacaoRps>";
+        $xml .= "<IdenticacaoRps Id='$id'>";
         $xml .= "<Numero>".$this->servico->Numero."</Numero>";
         $xml .= "<Serie>".$this->servico->Serie."</Serie>";
         $xml .= "<Tipo>".$this->servico->Tipo."</Tipo>";

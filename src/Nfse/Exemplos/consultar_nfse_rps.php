@@ -17,7 +17,7 @@ $tools = [
 $consultarNfseRps = new ConsultarNfseRps();
 
 $identificacaoRps = new stdClass;
-$identificacaoRps->Numero = 199;
+$identificacaoRps->Numero = 200;
 $identificacaoRps->Serie = 1;
 $identificacaoRps->Tipo = 1;
 $consultarNfseRps->setIdentificacaoRps($identificacaoRps);
