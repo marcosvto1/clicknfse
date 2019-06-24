@@ -2,7 +2,7 @@
     "name": "clicksoftware/clicknfse",
     "description": "Pacote para geração de notas fiscais de serviços",
     "type": "library",
-    "license": "BSD-2",
+    "license": ["LGPL-3.0-or-later", "GPL-3.0-or-later", "MIT"],
     "authors": [
         {
             "name": "Marcos Vinicius Tomaz De Oliveira",
