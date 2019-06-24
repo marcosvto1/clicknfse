@@ -1,5 +1,5 @@
 {
-    "name": "click/clicknfse",
+    "name": "clicksoftware/clicknfse",
     "description": "Pacote para geração de notas fiscais de serviços",
     "type": "library",
     "license": "BSD-2",
